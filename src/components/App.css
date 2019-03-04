@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.options {
+
+}
+
+.optionsList {
+  float: left;
+  margin: 0 5px;
+}
+
+.optionsList li {
+  list-style: none;
+}
+
+.problems {
+  clear: both;
+}
+
+.problem {
+  float: left;
+  padding: 12px 8px 12px 8px;
+  width: 120px;
+  text-align: left;
+  border: black solid 1px;
+}
+
+@media print {
+  .options, .instructions {
+    display: none;
+  }
+}
