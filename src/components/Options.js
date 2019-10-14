@@ -5,7 +5,8 @@ class Options extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      "order": "ordered"
+      "order": "ordered",
+      "excludeDuplicates": false
     }
   }
 
@@ -13,7 +14,20 @@ class Options extends Component {
     this.setState({
       "order": event.currentTarget.value
     });
-    this.props.selectionChanged({"order": event.currentTarget.value});
+    this.props.selectionChanged({
+      "order": event.currentTarget.value,
+      excludeDuplicates: this.state.excludeDuplicates
+    });
+  };
+
+  onOptionChanged = (event) => {
+    this.setState({
+      "excludeDuplicates": event.currentTarget.checked
+    });
+    this.props.selectionChanged({
+      "order": this.state.order,
+      excludeDuplicates: event.currentTarget.checked
+    });
   };
 
   render() {
@@ -28,6 +42,10 @@ class Options extends Component {
             <div className="form-check">
               <input className="form-check-input" type="radio" name="order" value="random" checked={this.state.order === 'random'} onChange={this.onOrderChanged}/>
               <label className="form-check-label">Random</label>
+            </div>
+            <div className="form-check">
+              <input onChange={this.onOptionChanged} type="checkbox" checked={this.state.excludeDuplicates} />
+              <label className="form-check-label">Exclude duplicates</label>
             </div>
           </div>
           <div className="form-group">

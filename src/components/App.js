@@ -34,7 +34,8 @@ class Config extends Component {
     this.props.optionsChanged({
       'aSelection': selection,
       'bSelection': this.state.bSelection,
-      'order': this.state.order
+      'order': this.state.order,
+      'excludeDuplicates': this.state.excludeDuplicates
     });
   };
 
@@ -43,18 +44,21 @@ class Config extends Component {
     this.props.optionsChanged({
       'aSelection': this.state.aSelection,
       'bSelection': selection,
-      'order': this.state.order
+      'order': this.state.order,
+      'excludeDuplicates': this.state.excludeDuplicates
     });
   };
 
   setOptions = (options) => {
     this.setState({
-      'order': options.order
+      'order': options.order,
+      'excludeDuplicates': options.excludeDuplicates
     });
     this.props.optionsChanged({
       'aSelection': this.state.aSelection,
       'bSelection': this.state.bSelection,
-      'order': options.order
+      'order': options.order,
+      'excludeDuplicates': options.excludeDuplicates
     });
   };
 
@@ -103,7 +107,7 @@ class App extends Component {
 
   optionsChanged = (options) => {
     console.log(options);
-    const problems = [];
+    let problems = [];
     let n = 0;
     options.aSelection.forEach(a => {
       options.bSelection.forEach(b => {
@@ -114,6 +118,20 @@ class App extends Component {
         });
       })
     });
+
+    if (options.excludeDuplicates) {
+      console.log("Excluding");
+      problems = problems.reduce((acc, curr) => {
+        if (acc.find(el => {
+          return (el.a === curr.a && el.b === curr.b) || (el.b === curr.a && el.a === curr.b);
+        })) {
+          return [...acc];
+        } else {
+          return [...acc, curr];
+        }
+
+      }, []);
+    }
 
     if (options.order === 'random') {
       shuffleArray(problems);
